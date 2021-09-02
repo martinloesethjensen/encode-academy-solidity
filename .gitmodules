@@ -1,0 +1,3 @@
+[submodule "volcano-coin/Academy"]
+	path = volcano-coin/Academy
+	url = https://github.com/ExtropyIO/Academy.git
