@@ -8,5 +8,5 @@ describe("VolcanoCoin", function () {
     await volcanoCoin.deployed();
 
     expect(await volcanoCoin.totalSupply()).to.equal(10000);
-  })
+  });
 });
