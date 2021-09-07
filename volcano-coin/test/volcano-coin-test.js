@@ -9,4 +9,15 @@ describe("VolcanoCoin", function () {
 
     expect(await volcanoCoin.totalSupply()).to.equal(10000);
   });
+
+  // TODO: addresses
+});
+
+describe("VolcanoToken", function () {
+  it("", async function () {
+    const VolcanoToken = await ethers.getContractFactory("VolcanoToken");
+    const volcanoToken = await VolcanoToken.deploy();
+    await volcanoToken.deployed();
+
+  });
 });
