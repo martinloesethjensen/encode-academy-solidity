@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract VolcanoCoin is ERC20("Volcano Coin", "VOC"), Ownable {
     uint256 currentPaymentIdentifier = 0;
 
-    address private administrator;
+    address immutable administrator;
 
     mapping(address => Payment[]) public payments;
 
@@ -37,30 +37,31 @@ contract VolcanoCoin is ERC20("Volcano Coin", "VOC"), Ownable {
     }
     mapping(uint => Record) public paymentsFromId;
 
-    constructor(address _administrator) {
-        _mint(msg.sender, 10000);
-        administrator = _administrator;
+    constructor() {
+        _mint(_msgSender(), 10000);
+        administrator = _msgSender();
     }
 
     modifier onlyAdmin {
-        require(msg.sender == administrator);
+        require(_msgSender() == administrator);
         _;
     }
 
     function increaseTotalSupplyWith1000() public onlyOwner {
-        _mint(msg.sender, 1000);
+        _mint(_msgSender(), 1000);
 
         emit TotalSupplyIncrease(totalSupply());
     }
 
     function transfer(address _recipient, uint256 _amount)
         public
+        virtual
         override
         returns (bool)
     {
-        _transfer(msg.sender, _recipient, _amount);
+        _transfer(_msgSender(), _recipient, _amount);
 
-        payments[msg.sender].push(
+        payments[_msgSender()].push(
             Payment({
                 identifier: currentPaymentIdentifier,
                 amount: _amount,
@@ -91,9 +92,9 @@ contract VolcanoCoin is ERC20("Volcano Coin", "VOC"), Ownable {
         require(paymentType >= PaymentType.unknown && paymentType <= PaymentType.groupPayment, "Payment Type invalid");
         require(bytes(comment).length != 0, "Comment invalid");
 
-        (, int256 i) = getPaymentDetails(msg.sender, identifier);
-        payments[msg.sender][uint(i)].paymentType = paymentType;
-        payments[msg.sender][uint(i)].comment = comment;
+        (, int256 i) = getPaymentDetails(_msgSender(), identifier);
+        payments[_msgSender()][uint(i)].paymentType = paymentType;
+        payments[_msgSender()][uint(i)].comment = comment;
     }
 
     function updatePaymentOnlyAdmin(uint id, PaymentType paymentType) public onlyAdmin {
