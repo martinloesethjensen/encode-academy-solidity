@@ -88,7 +88,7 @@ contract VolcanoCoin is ERC20("Volcano Coin", "VOC"), Ownable {
     }
 
     function updatePaymentDetails(uint identifier, PaymentType paymentType, string memory comment) public {
-        require(identifier > 0, "Invalid identifier");
+        require(identifier != 0, "Invalid identifier");
         require(paymentType >= PaymentType.unknown && paymentType <= PaymentType.groupPayment, "Payment Type invalid");
         require(bytes(comment).length != 0, "Comment invalid");
 
@@ -98,7 +98,7 @@ contract VolcanoCoin is ERC20("Volcano Coin", "VOC"), Ownable {
     }
 
     function updatePaymentOnlyAdmin(uint id, PaymentType paymentType) public onlyAdmin {
-        require(id != 0, "Id invalid");
+        require(id != 0, "Invalid identifier");
         require(paymentType >= PaymentType.unknown && paymentType <= PaymentType.groupPayment, "Payment Type invalid");
         string memory text = string(abi.encodePacked("updated by ",Strings.toHexString(uint256(uint160(administrator)))));
         updatePaymentDetails(id, paymentType, text);
