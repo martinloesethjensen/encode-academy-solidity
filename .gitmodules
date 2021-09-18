@@ -1,3 +1,6 @@
 [submodule "Academy"]
 	path = Academy
 	url = https://github.com/ExtropyIO/Academy.git
+[submodule "nft_dapp"]
+	path = nft_dapp
+	url = https://github.com/martinloesethjensen/nft_dapp.git
