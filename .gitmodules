@@ -1,3 +1,6 @@
 [submodule "Academy"]
 	path = Academy
 	url = https://github.com/ExtropyIO/Academy.git
+[submodule "encode-dao"]
+	path = encode-dao
+	url = https://github.com/redrocket94/encode-dao.git
